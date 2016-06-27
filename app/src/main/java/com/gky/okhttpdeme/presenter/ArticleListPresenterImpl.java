@@ -1,10 +1,10 @@
 package com.gky.okhttpdeme.presenter;
 
 import com.gky.okhttpdeme.config.ConfigDef;
-import com.gky.okhttpdeme.model.ArticleInfo;
-import com.gky.okhttpdeme.net.NetControler;
-import com.gky.okhttpdeme.net.entity.ArticlesRquest;
-import com.gky.okhttpdeme.net.listener.ResponseListener;
+import com.gky.okhttpdeme.model.NetControler;
+import com.gky.okhttpdeme.model.entity.ArticleInfo;
+import com.gky.okhttpdeme.model.entity.ArticlesRequest;
+import com.gky.okhttpdeme.model.listener.ResponseListener;
 import com.gky.okhttpdeme.presenter.listener.ArticleListPresenter;
 import com.gky.okhttpdeme.ui.listener.ArticleListViewListener;
 
@@ -19,6 +19,8 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
 
     private String articleType;
 
+    private int page = 0;
+
     public ArticleListPresenterImpl(ArticleListViewListener view, String articleType) {
         this.mView = view;
         this.articleType = articleType;
@@ -26,11 +28,15 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
         mView.setPresenter(this);
     }
 
+    public static void newInstance(ArticleListViewListener view, String articleType){
+        new ArticleListPresenterImpl(view, articleType);
+    }
+
     @Override
-    public void getArticleList(String type, int page){
+    public void getArticleList(){
         mView.showLoading();
-        String url = String.format("%s/%s/7/%d", ConfigDef.DATA_BASE_URL, type, page);
-        ArticlesRquest request = new ArticlesRquest(url, new ResponseListener<List<ArticleInfo>>() {
+        String url = String.format("%s/%s/15/%d", ConfigDef.DATA_BASE_URL, articleType, page++);
+        ArticlesRequest request = new ArticlesRequest(url, new ResponseListener<List<ArticleInfo>>() {
             @Override
             public void onComplete(List<ArticleInfo> response) {
                 mView.hideLoading();
@@ -53,6 +59,6 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
 
     @Override
     public void start() {
-
+        getArticleList();
     }
 }

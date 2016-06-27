@@ -1,6 +1,6 @@
 package com.gky.okhttpdeme.ui.listener;
 
-import com.gky.okhttpdeme.model.ArticleInfo;
+import com.gky.okhttpdeme.model.entity.ArticleInfo;
 import com.gky.okhttpdeme.presenter.listener.ArticleListPresenter;
 
 import java.util.List;
