@@ -13,11 +13,11 @@ import java.util.List;
 /**
  * Created by 凯阳 on 2016/6/26.
  */
-public class ArticleRquest extends RequestData<List<ArticleInfo>>{
+public class ArticlesRquest extends RequestData<List<ArticleInfo>>{
 
     private ResponseListener<List<ArticleInfo>> mListener;
 
-    public ArticleRquest(@NonNull String url, @NonNull ResponseListener<List<ArticleInfo>> listener) {
+    public ArticlesRquest(@NonNull String url, @NonNull ResponseListener<List<ArticleInfo>> listener) {
         super(url);
         mListener = listener;
     }

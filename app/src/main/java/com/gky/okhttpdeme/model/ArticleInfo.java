@@ -33,4 +33,5 @@ public class ArticleInfo {
 
     @JSONField(name = "who")
     private String who;
+
 }
