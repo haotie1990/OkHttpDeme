@@ -4,7 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="56dp"
     android:background="@android:color/darker_gray"
-    android:paddingBottom="4dp">
+    android:paddingBottom="2dp">
+
+    <ImageView
+        android:background="@color/colorAccent"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"/>
 
     <TextView
         android:id="@+id/tv_content"

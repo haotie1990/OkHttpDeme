@@ -19,7 +19,7 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
 
     private String articleType;
 
-    private int page = 0;
+    private int page = 1;
 
     public ArticleListPresenterImpl(ArticleListViewListener view, String articleType) {
         this.mView = view;
@@ -33,9 +33,10 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
     }
 
     @Override
-    public void getArticleList(){
+    public void getArticleList(boolean isFirst){
         mView.showLoading();
-        String url = String.format("%s/%s/15/%d", ConfigDef.DATA_BASE_URL, articleType, page++);
+        String url = String.format("%s/%s/15/%d", ConfigDef.DATA_BASE_URL, articleType, isFirst?page:page++);
+        System.out.println(url);
         ArticlesRequest request = new ArticlesRequest(url, new ResponseListener<List<ArticleInfo>>() {
             @Override
             public void onComplete(List<ArticleInfo> response) {
@@ -59,6 +60,6 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
 
     @Override
     public void start() {
-        getArticleList();
+        getArticleList(true);
     }
 }

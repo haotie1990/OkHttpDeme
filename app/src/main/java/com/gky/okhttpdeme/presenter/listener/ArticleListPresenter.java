@@ -8,7 +8,7 @@ import com.gky.okhttpdeme.model.entity.ArticleInfo;
  */
 public interface ArticleListPresenter extends BasePresenter{
 
-    void getArticleList();
+    void getArticleList(boolean isFirst);
 
     void openArticleDetail(ArticleInfo info);
 }
