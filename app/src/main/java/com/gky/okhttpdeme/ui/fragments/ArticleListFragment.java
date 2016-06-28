@@ -45,6 +45,8 @@ public class ArticleListFragment extends Fragment
 
     private View bodyView;
 
+    private boolean isLoading = false;
+
     public ArticleListFragment() {
     }
 
@@ -81,11 +83,11 @@ public class ArticleListFragment extends Fragment
                     System.out.println("onScrollStateChanged:" + newState);
                     if (newState == RecyclerView.SCROLL_STATE_IDLE
                         && lastVisablePostion == (mAdapter.getItemCount() - 1)
-                        && mProgress.getVisibility() == View.GONE) {
+                        && !isLoading) {
                         mPresenter.getArticleList(false);
                     }else if(newState == RecyclerView.SCROLL_STATE_DRAGGING
                         && mAdapter.getItemCount() == 0
-                        && mProgress.getVisibility() == View.GONE){
+                        && !isLoading){
                         mPresenter.getArticleList(true);
                     }
                 }
@@ -135,10 +137,12 @@ public class ArticleListFragment extends Fragment
     @Override
     public void showLoading() {
         mProgress.setVisibility(View.VISIBLE);
+        isLoading = true;
     }
 
     @Override
     public void hideLoading() {
+        isLoading = false;
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
