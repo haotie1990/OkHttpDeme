@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">OkHttpDeme</string>
+
+    <string name="article_type_android">Android</string>
+    <string name="article_type_ios">iOS</string>
+    <string name="article_type_web">前端</string>
 </resources>

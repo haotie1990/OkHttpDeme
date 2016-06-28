@@ -17,13 +17,16 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             app.popupTheme="@style/ThemeOverlay.AppCompat.Light"
-            app:layout_scrollFlags="scroll|enterAlways"
-            style="@style/AppToolbar"/>
+            app:titleTextAppearance="@style/ToolbarTextAppearance"
+            app:layout_scrollFlags="scroll|enterAlways"/>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimaryDark"
+            app:tabSelectedTextColor="@android:color/white"
+            app:tabTextAppearance="@style/TabLayoutTextAppearance"/>
 
     </android.support.design.widget.AppBarLayout>
 
