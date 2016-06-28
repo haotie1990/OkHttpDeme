@@ -35,7 +35,8 @@ public class ArticleListPresenterImpl implements ArticleListPresenter{
     @Override
     public void getArticleList(boolean isFirst){
         mView.showLoading();
-        String url = String.format("%s/%s/15/%d", ConfigDef.DATA_BASE_URL, articleType, isFirst?page:page++);
+        String url = String.format("%s/%s/15/%d", ConfigDef.DATA_BASE_URL, articleType,
+            isFirst?page=1:++page);
         System.out.println(url);
         ArticlesRequest request = new ArticlesRequest(url, new ResponseListener<List<ArticleInfo>>() {
             @Override

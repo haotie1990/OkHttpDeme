@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
@@ -42,6 +43,7 @@ public class ArticleListFragment extends Fragment
 
     private int lastVisablePostion;
 
+    private View bodyView;
 
     public ArticleListFragment() {
     }
@@ -49,37 +51,42 @@ public class ArticleListFragment extends Fragment
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        Log.i(articleType, "onAttach");
         articleType = getArguments().getString("ArticleType");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View bodyView = inflater.inflate(R.layout.fragment_articles, container, false);
-        mProgress = (ProgressBar) bodyView.findViewById(R.id.pb_loading);
-        mRecyclerView = (RecyclerView) bodyView.findViewById(R.id.rv_content);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAdapter = new ArticleRyAdapter(getActivity(), this);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.addOnScrollListener(new OnScrollListener() {
-            @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
-                System.out.println("onScrolled");
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                lastVisablePostion = linearLayoutManager.findLastVisibleItemPosition();
-            }
-
-            @Override
-            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-                super.onScrollStateChanged(recyclerView, newState);
-                System.out.println("onScrollStateChanged:"+newState);
-                if(newState == RecyclerView.SCROLL_STATE_IDLE
-                    && lastVisablePostion == (mAdapter.getItemCount()-1)){
-                    mPresenter.getArticleList(false);
+        Log.i(articleType, "onCreateView");
+        if(null == bodyView) {
+            bodyView = inflater.inflate(R.layout.fragment_articles, container, false);
+            mProgress = (ProgressBar) bodyView.findViewById(R.id.pb_loading);
+            mRecyclerView = (RecyclerView) bodyView.findViewById(R.id.rv_content);
+            mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+            mAdapter = new ArticleRyAdapter(getActivity(), this);
+            mRecyclerView.setAdapter(mAdapter);
+            mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+            mRecyclerView.addOnScrollListener(new OnScrollListener() {
+                @Override
+                public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    super.onScrolled(recyclerView, dx, dy);
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    lastVisablePostion = linearLayoutManager.findLastVisibleItemPosition();
                 }
-            }
-        });
+
+                @Override
+                public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                    super.onScrollStateChanged(recyclerView, newState);
+                    System.out.println("onScrollStateChanged:" + newState);
+                    if (newState == RecyclerView.SCROLL_STATE_IDLE
+                        && lastVisablePostion == (mAdapter.getItemCount() - 1)) {
+                        mPresenter.getArticleList(false);
+                    }
+                }
+            });
+            mPresenter.start();
+        }
         return bodyView;
     }
 
@@ -87,12 +94,27 @@ public class ArticleListFragment extends Fragment
     public void onResume() {
         super.onResume();
         Log.i(articleType, "onResume");
-        mPresenter.start();
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        Log.i(articleType, "onDestroyView");
+        if(null != bodyView){
+            ((ViewGroup)bodyView.getParent()).removeView(bodyView);
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        Log.i(articleType, "onDetach");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i(articleType, "onDestroy");
     }
 
     @Override

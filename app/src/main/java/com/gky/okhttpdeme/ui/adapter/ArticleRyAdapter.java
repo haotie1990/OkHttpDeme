@@ -74,6 +74,7 @@ public class ArticleRyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         ArticleInfo articleInfo = mArticles.get(index);
         articleInfo.setUsed(false);
         mItemListener.OnItemClick(articleInfo);
+        notifyItemChanged(index);
     }
 
     @Override

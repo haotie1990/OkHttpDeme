@@ -55,11 +55,12 @@ public class NetControler {
         mClient.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                System.out.println(getClass().getName()+":onFailure::"+e.getMessage());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                System.out.println(getClass().getName()+":onResponse");
                 requestData.deliver(response);
             }
         });
