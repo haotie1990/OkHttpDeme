@@ -21,13 +21,16 @@ public abstract class RequestData<T> {
 
     public void deliver(Response response) throws IOException {
         if(response.isSuccessful()){
-
             T t = parse(response.body().string());
             onComplete(t);
         }else{
-            onError("Unknown expection:[" + response.code() + "] "
+            onError("Unknown exception:[" + response.code() + "] "
                 + response.message());
         }
+    }
+
+    public void error(String error){
+        onError(error);
     }
 
     public abstract T parse(String body);

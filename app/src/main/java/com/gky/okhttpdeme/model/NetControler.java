@@ -48,7 +48,7 @@ public class NetControler {
 
     public <T> void get(final RequestData<T> requestData){
 
-        Request request = new Request.Builder()
+        final Request request = new Request.Builder()
             .url(requestData.getUrl())
             .build();
 
@@ -56,6 +56,7 @@ public class NetControler {
             @Override
             public void onFailure(Call call, IOException e) {
                 System.out.println(getClass().getName()+":onFailure::"+e.getMessage());
+                requestData.error(e.getMessage());
             }
 
             @Override
