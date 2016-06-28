@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.gky.okhttpdeme.R;
 import com.gky.okhttpdeme.model.entity.ArticleInfo;
@@ -109,12 +110,15 @@ public class ArticleListFragment extends Fragment
     @Override
     public void openArticleDeatail(ArticleInfo info) {
         Intent i = new Intent();
+        i.setAction("com.gky.open.web");
+        i.putExtra("Desc", info.getDesc());
+        i.putExtra("Url", info.getUrl());
         getActivity().startActivity(i);
     }
 
     @Override
     public void showError(String error) {
-
+        Toast.makeText(getContext(), error, Toast.LENGTH_SHORT).show();
     }
 
     @Override
