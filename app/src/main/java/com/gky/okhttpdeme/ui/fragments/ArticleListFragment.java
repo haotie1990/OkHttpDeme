@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -39,6 +40,9 @@ public class ArticleListFragment extends Fragment
 
     private ProgressBar mProgress;
 
+    private int lastVisablePostion;
+
+
     public ArticleListFragment() {
     }
 
@@ -57,6 +61,25 @@ public class ArticleListFragment extends Fragment
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mAdapter = new ArticleRyAdapter(getActivity(), this);
         mRecyclerView.setAdapter(mAdapter);
+        mRecyclerView.addOnScrollListener(new OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                System.out.println("onScrolled");
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                lastVisablePostion = linearLayoutManager.findLastVisibleItemPosition();
+            }
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                System.out.println("onScrollStateChanged:"+newState);
+                if(newState == RecyclerView.SCROLL_STATE_IDLE
+                    && lastVisablePostion == (mAdapter.getItemCount()-1)){
+                    mPresenter.getArticleList(false);
+                }
+            }
+        });
         return bodyView;
     }
 
@@ -113,6 +136,7 @@ public class ArticleListFragment extends Fragment
         i.setAction("com.gky.open.web");
         i.putExtra("Desc", info.getDesc());
         i.putExtra("Url", info.getUrl());
+        System.out.println(i.getExtras());
         getActivity().startActivity(i);
     }
 
