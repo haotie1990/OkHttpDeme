@@ -108,6 +108,7 @@ public class ArticleRyAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             int first = content.indexOf("("), last = content.indexOf(")");
             SpannableStringBuilder builder = new SpannableStringBuilder(content);
             if(used) {
+                mContent.setTextColor(Color.BLACK);
                 builder.setSpan(new ForegroundColorSpan(Color.GRAY), first, last + 1, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
             }else{
                 mContent.setTextColor(Color.GRAY);
