@@ -26,8 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimaryDark"
-            app:tabSelectedTextColor="@android:color/white"
-            app:tabTextAppearance="@style/TabLayoutTextAppearance"/>
+            style="@style/AppTabLayout"/>
 
     </android.support.design.widget.AppBarLayout>
 
