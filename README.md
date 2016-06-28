@@ -1,0 +1,2 @@
+# OkHttpDeme
+基于GankIO的API，使用okhttp网络库，采用MVP的架构实现简单的GankIO的客户端
