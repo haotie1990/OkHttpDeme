@@ -80,8 +80,13 @@ public class ArticleListFragment extends Fragment
                     super.onScrollStateChanged(recyclerView, newState);
                     System.out.println("onScrollStateChanged:" + newState);
                     if (newState == RecyclerView.SCROLL_STATE_IDLE
-                        && lastVisablePostion == (mAdapter.getItemCount() - 1)) {
+                        && lastVisablePostion == (mAdapter.getItemCount() - 1)
+                        && mProgress.getVisibility() == View.GONE) {
                         mPresenter.getArticleList(false);
+                    }else if(newState == RecyclerView.SCROLL_STATE_DRAGGING
+                        && mAdapter.getItemCount() == 0
+                        && mProgress.getVisibility() == View.GONE){
+                        mPresenter.getArticleList(true);
                     }
                 }
             });
